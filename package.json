@@ -1,0 +1,42 @@
+{
+  "name": "plants-viewer",
+  "version": "1.0.0",
+  "description": "see who needs watering",
+  "main": "index.js",
+  "scripts": {
+    "build_prod": "./node_modules/.bin/webpack --config webpack.prod.js",
+    "build_staging": "./node_modules/.bin/webpack --config webpack.stag.js",
+    "start": "./node_modules/.bin/webpack --config webpack.local.js",
+    "watch": "npm run start -- --watch",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "autoprefixer": "^9.7.4",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.6.4",
+    "css-loader": "^3.4.2",
+    "extract-loader": "^4.0.3",
+    "file-loader": "^5.0.2",
+    "jest": "^24.9.0",
+    "node-sass": "^4.13.1",
+    "postcss-loader": "^3.0.0",
+    "react-test-renderer": "^16.12.0",
+    "regenerator-runtime": "^0.13.3",
+    "sass-loader": "^8.0.2",
+    "webpack": "^4.41.2",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "fibers": "^5.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sass": "^1.26.8"
+  }
+}
