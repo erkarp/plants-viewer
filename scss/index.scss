@@ -1,3 +1,23 @@
-.hello {
-  color: red;
+#app {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+.plants {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+
+  li {
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
+    border-radius: 15px;
+
+    &:nth-child(odd) {
+      background-color: #e7fbd8;
+    }
+  }
 }

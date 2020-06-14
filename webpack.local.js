@@ -11,7 +11,7 @@ module.exports = {
         crossOriginLoading: 'anonymous'
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.tsx']
     },
     mode: 'development',
     devtool: 'inline-source-map',
