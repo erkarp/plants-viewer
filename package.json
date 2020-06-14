@@ -8,6 +8,7 @@
     "build_staging": "./node_modules/.bin/webpack --config webpack.stag.js",
     "start": "./node_modules/.bin/webpack --config webpack.local.js",
     "watch": "npm run start -- --watch",
+    "server": "webpack-dev-server --config webpack.local.js",
     "test": "jest"
   },
   "author": "",
@@ -19,10 +20,12 @@
     "autoprefixer": "^9.7.4",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
     "extract-loader": "^4.0.3",
     "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^4.3.0",
     "jest": "^24.9.0",
     "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
@@ -33,10 +36,10 @@
     "typescript": "^3.9.5",
     "webpack": "^4.41.2",
     "webpack-bundle-tracker": "^0.4.3",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "axios": "^0.19.2",
     "fibers": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
