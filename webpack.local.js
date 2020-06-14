@@ -18,25 +18,33 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
       {
-				test: /\.scss$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: './style.css',
-						}
-					},
-					{ loader: 'extract-loader' },
-					{ loader: 'css-loader?-url' },
-					{ loader: 'postcss-loader' },
-					{ loader: 'sass-loader' }
-				]
-			}
+        test: /\.scss$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: './style.css',
+                }
+            },
+            { loader: 'extract-loader' },
+            { loader: 'css-loader?-url' },
+            { loader: 'postcss-loader' },
+            { loader: 'sass-loader' }
+        ]
+      }
     ],
   },
+  resolve: {
+    extensions: [".js", ".jsx", ".es6"]
+  }
 };

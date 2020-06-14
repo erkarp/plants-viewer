@@ -10,6 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -31,4 +36,7 @@ module.exports = {
       }
     ],
   },
+  resolve: {
+    extensions: [".js", ".jsx", ".es6"]
+  }
 };
