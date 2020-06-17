@@ -22,16 +22,12 @@ export default function Plant() {
 
     return (
         <main>
-            <h3>{id}</h3>
+            <h1>{data.name}</h1>
 
-            <h4>Name</h4>
-            <span>{data.name}</span>
-
-            <h4>Last Watered</h4>
-            <span>{data.latest_watering_date}</span>
-
-            <h4>Next Watering</h4>
-            <span>{data.time_till_next_watering}</span>
+            <ul>
+                <li><strong>Last Watered: </strong><span>{data.latest_watering_date}</span></li>
+                <li><strong>Location: </strong><span>{data.spot}</span></li>
+            </ul>
 
             <DayPicker initialMonth={new Date()} selectedDays={data.watered}/>
         </main>
