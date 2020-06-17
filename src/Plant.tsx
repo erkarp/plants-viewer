@@ -15,6 +15,7 @@ export default function Plant() {
                 data.watered = data.watered.map(date => {
                     return new Date(date)
                 });
+                data = {...data, ...data.species};
                 console.log(data);
                 setData(data);
             })
@@ -26,6 +27,7 @@ export default function Plant() {
 
             <ul>
                 <li><strong>Last Watered: </strong><span>{data.latest_watering_date}</span></li>
+                <li><strong>Light Needs: </strong><span>{data.lighting}</span></li>
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
