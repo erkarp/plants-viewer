@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import DayPicker from "react-day-picker";
 
 
 export default function Plant() {
@@ -11,6 +12,9 @@ export default function Plant() {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
+                data.watered = data.watered.map(date => {
+                    return new Date(date)
+                });
                 console.log(data);
                 setData(data);
             })
@@ -28,6 +32,8 @@ export default function Plant() {
 
             <h4>Next Watering</h4>
             <span>{data.time_till_next_watering}</span>
+
+            <DayPicker initialMonth={new Date()} selectedDays={data.watered}/>
         </main>
     )
 }
