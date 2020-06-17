@@ -21,6 +21,14 @@ export default function Plant() {
             })
     }, []);
 
+    const modifiers = {
+        watered: data.watered,
+        nextWatering: {
+            from: new Date(data.next_watering_min),
+            to: new Date(data.next_watering_max)
+        }
+    };
+
     return (
         <main>
             <h1>{data.name}</h1>
@@ -31,7 +39,7 @@ export default function Plant() {
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
-            <DayPicker initialMonth={new Date()} selectedDays={data.watered}/>
+            <DayPicker modifiers={modifiers}/>
         </main>
     )
 }
