@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useLocation,
+} from "react-router-dom";
 
-function App() {
-    const URL = "http://127.0.0.1:8000/plants/plants/?format=json";
-    const [data, setData] = useState([]);
+import Feed from "./Feed";
+import Modal from "./Modal";
+import Plant from "./Plant";
 
-    useEffect(() => {
-        fetch(URL)
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data.sort((a, b) =>
-                    a.time_till_next_watering - b.time_till_next_watering));
-            })
-    }, []);
 
+export default function ModalGalleryExample() {
     return (
-        <ul className="plants">
-            <li><span>Plant Name</span><span>Days till next water</span></li>
-            {data.map((plant, index) => {
-                return <li key={index}>
-                    <span>{plant.name}</span>
-                    <span>{plant.days_till_next_watering_min} - {plant.days_till_next_watering_max}</span>
-                </li>
-            })}
-        </ul>
-    )
+        <Router>
+            <ModalSwitch />
+        </Router>
+    );
 }
 
-export default App;
+function ModalSwitch() {
+    let location = useLocation();
+    let background = location.state && location.state.background;
+
+    return (
+        <div>
+            <Switch location={background || location}>
+                <Route exact path="/" children={<Feed />} />
+                <Route path="/plant/:id" children={<Plant location={location} />} />
+            </Switch>
+
+            {/* Show the modal when a background page is set */}
+            {/*{background && <Route path="/img/:id" children={<Modal />} />}*/}
+        </div>
+    );
+}
