@@ -8,12 +8,18 @@ export default function Plant() {
     let url = `http://127.0.0.1:8000/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
 
+    function getDate(s) {
+        if (s) {
+            return new Date(s.replace(/-/g, '\/'))
+        }
+    }
+
     useEffect(() => {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
                 data.watered = data.watered.map(date => {
-                    return new Date(date.replace(/-/g, '\/'))
+                    return getDate(date)
                 });
                 data = {...data, ...data.species};
                 console.log(data);
@@ -24,8 +30,8 @@ export default function Plant() {
     const modifiers = {
         watered: data.watered,
         nextWatering: {
-            from: new Date(data.next_watering_min),
-            to: new Date(data.next_watering_max)
+            from: getDate(data.next_watering_min),
+            to: getDate(data.next_watering_max)
         }
     };
 
