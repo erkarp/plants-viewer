@@ -29,6 +29,17 @@ export default function Plant() {
         }
     };
 
+    function getFirstWater() {
+        const firstWater = data.watered[data.watered.length - 1];
+        return new Date(firstWater.getFullYear(), firstWater.getMonth());
+    }
+
+    function numberOfMonths() {
+        const firstWater = getFirstWater(), today = new Date();
+        return today.getMonth() - firstWater.getMonth() + 1 +
+            (12 * (today.getFullYear() - firstWater.getFullYear()))
+    }
+
     return (
         <main>
             <h1>{data.name}</h1>
@@ -39,7 +50,16 @@ export default function Plant() {
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
-            <DayPicker modifiers={modifiers}/>
+            {data.watered &&
+                <DayPicker
+                    modifiers={modifiers}
+                    numberOfMonths={numberOfMonths()}
+                    initialMonth={getFirstWater()}
+                    reverseMonths
+                    fixedWeeks
+                    canChangeMonth={false}
+                />
+            }
         </main>
     )
 }
