@@ -17,7 +17,7 @@ export default function Feed() {
 
     return (
         <ul>
-            <li><span>Plant Name</span><span>Days till next water</span></li>
+            <li><span>Plant Name</span><span>Next Water</span></li>
             {data.map((plant, index) => {
                 return <FeedRow {...plant} key={index}/>
             })}

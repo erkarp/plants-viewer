@@ -15,9 +15,18 @@ export default function FeedRow(props) {
     const today__max = daysDiff(new Date(), getDate(props.next_watering_max));
     const today__min = daysDiff(new Date(), getDate(props.next_watering_min));
 
+    const formatBucket = function() {
+        if (today__max < 0) return 1;
+        if (today__min > 0) return 10;
+
+        const min__max = daysDiff(getDate(props.next_watering_min), getDate(props.next_watering_max));
+        return 10 - Math.abs(Math.floor(today__min*8/min__max));
+    }();
+
     return (
-        <li>
+        <li className={`feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
+
             {today__max < 0 ?
                  <DaysLate max_date={props.next_watering_max} today__max={today__max}/> :
                 today__min < 0 ?
@@ -40,7 +49,7 @@ function DaysLate(props) {
 function Within(props) {
     return (
         <span>
-            <time dateTime={props.max_date}>{props.today__max}</time> days
+            within <time dateTime={props.max_date}>{props.today__max}</time> days
         </span>
     )
 }
@@ -48,8 +57,8 @@ function Within(props) {
 function Between(props) {
     return (
         <span>
-            <time dateTime={props.min_date}>{props.today__min}</time> -{' '}
-            <time dateTime={props.max_date}>{props.today__max}</time> days
+            in <time dateTime={props.min_date}>{props.today__min}</time> -
+            {' '}<time dateTime={props.max_date}>{props.today__max}</time> days
         </span>
     )
 }
