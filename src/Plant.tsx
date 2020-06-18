@@ -13,7 +13,7 @@ export default function Plant() {
             .then((response) => response.json())
             .then((data) => {
                 data.watered = data.watered.map(date => {
-                    return new Date(date)
+                    return new Date(date.replace(/-/g, '\/'))
                 });
                 data = {...data, ...data.species};
                 console.log(data);
@@ -56,7 +56,6 @@ export default function Plant() {
                     numberOfMonths={numberOfMonths()}
                     initialMonth={getFirstWater()}
                     reverseMonths
-                    fixedWeeks
                     canChangeMonth={false}
                 />
             }

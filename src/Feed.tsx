@@ -17,7 +17,7 @@ export default function Feed() {
     }, []);
 
     return (
-        <ul className="plants">
+        <ul>
             <li><span>Plant Name</span><span>Days till next water</span></li>
             {data.map((plant, index) => {
                 return <li key={index}>

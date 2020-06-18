@@ -6,11 +6,14 @@
   justify-content: space-between;
 }
 
+ul {
+  padding: 0;
+}
+
 .plants {
   width: 100%;
-  max-width: 500px;
+  max-width: 350px;
   margin: 0 auto;
-  padding: 0;
 
   li {
     display: flex;
@@ -24,16 +27,19 @@
   }
 }
 
-.DayPicker-Day--watered {
-  color: #fff;
-  background-color: #50981a;
-}
+:not(.DayPicker-Day--outside) {
+  &.DayPicker-Day--watered {
+    color: #fff;
+    background-color: #50981a;
+  }
 
-.DayPicker-Day--nextWatering {
-  color: #fff;
-  background-color: #c1e8a3;
+  &.DayPicker-Day--nextWatering {
+    color: #fff;
+    background-color: #c1e8a3;
+  }
 }
 
 .DayPicker-Day--today {
-  outline: 2px solid green;
+  outline: 2px solid #51a0fa;
+  color: #51a0fa;
 }

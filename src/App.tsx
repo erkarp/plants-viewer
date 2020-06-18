@@ -24,14 +24,14 @@ function ModalSwitch() {
     let background = location.state && location.state.background;
 
     return (
-        <div>
+        <div className="plants">
             <Switch location={background || location}>
                 <Route exact path="/" children={<Feed />} />
                 <Route path="/plant/:id" children={<Plant location={location} />} />
             </Switch>
 
             {/* Show the modal when a background page is set */}
-            {/*{background && <Route path="/img/:id" children={<Modal />} />}*/}
+            {background && <Route path="/img/:id" children={<Modal />} />}
         </div>
     );
 }
