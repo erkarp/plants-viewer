@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DayPicker from "react-day-picker";
+import getDate from "./utils/getDate";
 
 
 export default function Plant() {
     let { id } = useParams();
     let url = `http://127.0.0.1:8000/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
-
-    function getDate(s) {
-        if (s) {
-            return new Date(s.replace(/-/g, '\/'))
-        }
-    }
 
     useEffect(() => {
         fetch(url)
