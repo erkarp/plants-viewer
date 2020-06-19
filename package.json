@@ -4,8 +4,7 @@
   "description": "see who needs watering",
   "main": "index.js",
   "scripts": {
-    "build_prod": "./node_modules/.bin/webpack --config webpack.prod.js",
-    "build_staging": "./node_modules/.bin/webpack --config webpack.stag.js",
+    "build": "./node_modules/.bin/webpack --config webpack.prod.js",
     "start": "./node_modules/.bin/webpack --config webpack.local.js",
     "watch": "npm run start -- --watch",
     "server": "webpack-dev-server --config webpack.local.js",

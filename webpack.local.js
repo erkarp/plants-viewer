@@ -16,14 +16,10 @@ module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        // port: 3000,
         host: 'localhost',
         historyApiFallback: true,
         noInfo: false,
-        // stats: 'minimal',
-        // contentBase: '.',
         publicPath: '/build',
-        // contentBase: path.join(__dirname, publicPath),
         hot: true
     },
     plugins: [
