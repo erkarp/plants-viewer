@@ -3,11 +3,10 @@ import FeedRow from "./FeedRow";
 
 
 export default function Feed() {
-    const URL = "http://127.0.0.1:8000/plants/plants/?format=json";
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch(URL)
+        fetch(`${process.env.__URL__}/plants/plants/?format=json`)
             .then((response) => response.json())
             .then((data) => {
                 setData(data.sort((a, b) =>

@@ -6,7 +6,7 @@ import getDate from "./utils/getDate";
 
 export default function Plant() {
     let { id } = useParams();
-    let url = `http://127.0.0.1:8000/plants/plants/${id}/?format=json`;
+    let url = `${process.env.__URL__}/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
 
     useEffect(() => {

@@ -1,7 +1,6 @@
 const path = require('path');
-const BundleTracker = require('webpack-bundle-tracker');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { HtmlWebpackPlugin } = require('html-webpack-plugin');
+const webpack = require('webpack');
+const env = require('./local.env');
 
 module.exports = {
     entry:  [path.join(__dirname, 'src/index'), path.join(__dirname, 'scss/index.scss')],
@@ -23,12 +22,7 @@ module.exports = {
         hot: true
     },
     plugins: [
-        // new BundleTracker({
-        //     path: __dirname,
-        //     filename: 'webpack-stats.json'
-        // }),
-        // new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-        // new HtmlWebpackPlugin()
+        new webpack.DefinePlugin(env),
     ],
     module: {
         rules: [
