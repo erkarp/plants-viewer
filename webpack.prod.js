@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const env = require('./local.env');
 
 module.exports = {
   entry:  [path.join(__dirname, 'src/index'), path.join(__dirname, 'scss/index.scss')],
@@ -7,6 +9,9 @@ module.exports = {
     filename: 'index.js'
   },
   mode: 'production',
+  plugins: [
+    new webpack.DefinePlugin(env),
+  ],
   module: {
     rules: [
       {
