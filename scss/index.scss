@@ -18,9 +18,12 @@ ul {
   li {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1px;
-    padding: 5px 10px;
-    border-radius: 15px;
+    padding: 7px 14px;
+    border-radius: 25px;
+
+    &:not(:first-child) {
+      margin-bottom: 5px;
+    }
 
     //&:nth-child(odd) {
     //  background-color: #e7fbd8;
