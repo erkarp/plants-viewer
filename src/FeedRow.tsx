@@ -27,23 +27,20 @@ export default function FeedRow(props) {
         <li className={`feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
 
-            {today__max === -1 ?
-                <span><time dateTime={props.next_watering_max}>Yesterday</time></span> :
+            {today__max === 0 ?
+                <span><time dateTime={props.next_watering_max}>Today</time></span> :
 
-                today__max === 0 ?
-                    <span><time dateTime={props.next_watering_max}>Today</time></span> :
+                today__max === 1 ?
+                    <span><time dateTime={props.next_watering_max}>By tomorrow</time></span> :
 
-                    today__max === 1 ?
-                        <span><time dateTime={props.next_watering_max}>Tomorrow</time></span> :
+                    today__max < 0 ?
+                        <DaysLate max_date={props.next_watering_max} today__max={today__max}/> :
 
-                        today__max < 0 ?
-                            <DaysLate max_date={props.next_watering_max} today__max={today__max}/> :
+                        today__min <= 0 ?
+                            <Within max_date={props.next_watering_max} today__max={today__max}/> :
 
-                            today__min < 0 ?
-                                <Within max_date={props.next_watering_max} today__max={today__max}/> :
-
-                                <Between max_date={props.next_watering_max} today__max={today__max}
-                                 min_date={props.next_watering_min} today__min={today__min}/>
+                            <Between max_date={props.next_watering_max} today__max={today__max}
+                             min_date={props.next_watering_min} today__min={today__min}/>
             }
         </li>
     )
@@ -52,7 +49,8 @@ export default function FeedRow(props) {
 function DaysLate(props) {
     return (
     <span>
-        <time dateTime={props.max_date}>{Math.abs(props.today__max)}</time> days late
+        <time dateTime={props.max_date}>{Math.abs(props.today__max)}</time>
+        {' '}day{props.today__max < -1 ? 's' : ''} late
     </span>
     )
 }
