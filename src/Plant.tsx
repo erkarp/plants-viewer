@@ -17,7 +17,6 @@ export default function Plant() {
                     return getDate(date)
                 });
                 data = {...data, ...data.species};
-                console.log(data);
                 setData(data);
             })
     }, []);
@@ -41,6 +40,29 @@ export default function Plant() {
             (12 * (today.getFullYear() - firstWater.getFullYear()))
     }
 
+    function wateredToday() {
+        const today = new Date();
+        const water = new Date(data.latest_watering_date);
+
+        return today.getFullYear() === water.getFullYear() &&
+            today.getMonth() === water.getMonth() &&
+            today.getDay() === water.getDate() + 1;
+    }
+
+    function water() {
+        fetch(`${process.env.__URL__}/plants/watering/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `plant=${id}`
+        }).then(data => {
+            if (data.status === 403) {
+                console.log(`NOT LOGGED IN: ${data}`)
+            }
+        });
+    }
+
     return (
         <main>
             <h1>{data.name}</h1>
@@ -50,6 +72,11 @@ export default function Plant() {
                 <li><strong>Light Needs: </strong><span>{data.lighting}</span></li>
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
+
+            {wateredToday() ?
+                <h3 className="wateredToday">Watered Today</h3> :
+                <button onClick={() => {water()}}>Water</button>
+            }
 
             {data.watered &&
                 <DayPicker
