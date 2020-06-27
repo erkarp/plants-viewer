@@ -11,7 +11,13 @@ import Modal from "./Modal";
 import Plant from "./Plant";
 
 
-export default function ModalGalleryExample() {
+export default function App() {
+    (function getCsrfToken() {
+        fetch(`${process.env.__URL__}/token/`, {
+            credentials: 'include',
+        });
+    }());
+
     return (
         <Router>
             <ModalSwitch />

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DayPicker from "react-day-picker";
 import getDate from "./utils/getDate";
+import LoginForm from "./LoginForm";
 
 
 export default function Plant() {
     let { id } = useParams();
     let url = `${process.env.__URL__}/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
+    const [promptLogin, setPromptLogin] = useState(false);
 
     useEffect(() => {
         fetch(url)
@@ -57,8 +59,11 @@ export default function Plant() {
             },
             body: `plant=${id}`
         }).then(data => {
-            if (data.status === 403) {
-                console.log(`NOT LOGGED IN: ${data}`)
+            if (data.status === 401 || data.status === 403) {
+                console.log(`NOT logged in: ${data}`);
+                setPromptLogin(true);
+            } else {
+                console.log(`logged in! ${data}`);
             }
         });
     }
@@ -73,10 +78,13 @@ export default function Plant() {
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
-            {wateredToday() ?
-                <h3 className="wateredToday">Watered Today</h3> :
-                <button onClick={() => {water()}}>Water</button>
-            }
+            <LoginForm/>
+
+            {/*{wateredToday() ?*/}
+            {/*    <h3 className="wateredToday">Watered Today</h3> :*/}
+            {/*    promptLogin ? <LoginForm/> :*/}
+            {/*        <button onClick={() => {water()}}>Water</button>*/}
+            {/*}*/}
 
             {data.watered &&
                 <DayPicker

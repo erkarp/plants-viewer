@@ -15,6 +15,9 @@ module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
+        headers: {
+            'Access-Control-Expose-Headers': 'Set-Cookie'
+        },
         host: 'localhost',
         historyApiFallback: true,
         noInfo: false,
