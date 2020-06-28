@@ -5,7 +5,7 @@ import getDate from "./utils/getDate";
 import LoginForm from "./LoginForm";
 
 
-export default function Plant() {
+export default function Plant(props) {
     let { id } = useParams();
     let url = `${process.env.__URL__}/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
@@ -55,9 +55,10 @@ export default function Plant() {
         fetch(`${process.env.__URL__}/plants/watering/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `JWT ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
             },
-            body: `plant=${id}`
+            body: JSON.stringify({  "plant": id})
         }).then(data => {
             if (data.status === 401 || data.status === 403) {
                 console.log(`NOT logged in: ${data}`);
@@ -78,13 +79,13 @@ export default function Plant() {
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
-            <LoginForm/>
+            {wateredToday() ?
+                <h3 className="wateredToday">Watered Today</h3> :
 
-            {/*{wateredToday() ?*/}
-            {/*    <h3 className="wateredToday">Watered Today</h3> :*/}
-            {/*    promptLogin ? <LoginForm/> :*/}
-            {/*        <button onClick={() => {water()}}>Water</button>*/}
-            {/*}*/}
+                promptLogin ?
+                    <LoginForm setPromptLogin={setPromptLogin} {...props}/> :
+                    <button onClick={() => {water()}}>Water</button>
+            }
 
             {data.watered &&
                 <DayPicker

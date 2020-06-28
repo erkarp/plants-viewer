@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,12 +12,6 @@ import Plant from "./Plant";
 
 
 export default function App() {
-    (function getCsrfToken() {
-        fetch(`${process.env.__URL__}/token/`, {
-            credentials: 'include',
-        });
-    }());
-
     return (
         <Router>
             <ModalSwitch />
@@ -26,6 +20,7 @@ export default function App() {
 }
 
 function ModalSwitch() {
+    const [user, setUser] = useState('');
     let location = useLocation();
     let background = location.state && location.state.background;
 
@@ -33,7 +28,7 @@ function ModalSwitch() {
         <div className="plants">
             <Switch location={background || location}>
                 <Route exact path="/" children={<Feed />} />
-                <Route path="/plant/:id" children={<Plant location={location} />} />
+                <Route path="/plant/:id" children={<Plant location={location} user={user} setUser={setUser} />} />
             </Switch>
 
             {/* Show the modal when a background page is set */}

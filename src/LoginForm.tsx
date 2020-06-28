@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import getCookie from './utils/getCookie'
 
-export default function LoginForm () {
+export default function LoginForm (props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     function submit(e) {
         e.preventDefault();
 
-        fetch(`${process.env.__URL__}/auth/login/`, {
+        fetch(`${process.env.__URL__}/token-auth/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,9 +16,15 @@ export default function LoginForm () {
             },
             body: JSON.stringify({username, password}),
             credentials: 'include',
-        }).then(data => {
-            console.log(`login attempt: ${data.status} ${data.statusText}`);
-        });
+        })
+            .then(res => res.json())
+            .then(json => {
+                localStorage.setItem('token', json.token);
+                if (json.user.username) {
+                    props.setUser(json.user.username);
+                    props.setPromptLogin(false);
+                }
+            });
     }
 
     return (
