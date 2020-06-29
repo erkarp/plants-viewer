@@ -10,17 +10,10 @@ export default function Plant(props) {
     let url = `${process.env.__URL__}/plants/plants/${id}/?format=json`;
     const [data, setData] = useState([]);
     const [promptLogin, setPromptLogin] = useState(false);
+    const [recentWater, setRecentWater] = useState(false);
 
     useEffect(() => {
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                data.watered = data.watered.map(date => {
-                    return getDate(date)
-                });
-                data = {...data, ...data.species};
-                setData(data);
-            })
+        getPlantData()
     }, []);
 
     const modifiers = {
@@ -30,6 +23,18 @@ export default function Plant(props) {
             to: getDate(data.next_watering_max)
         }
     };
+
+    function getPlantData() {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                data.watered = data.watered.map(date => {
+                    return getDate(date)
+                });
+                data = {...data, ...data.species};
+                setData(data);
+            })
+    }
 
     function getFirstWater() {
         const firstWater = data.watered[data.watered.length - 1];
@@ -44,11 +49,11 @@ export default function Plant(props) {
 
     function wateredToday() {
         const today = new Date();
-        const water = new Date(data.latest_watering_date);
+        const water = new Date(`${data.latest_watering_date}T00:00:00`);
 
         return today.getFullYear() === water.getFullYear() &&
             today.getMonth() === water.getMonth() &&
-            today.getDay() === water.getDate() + 1;
+            today.getDate() === water.getDate();
     }
 
     function water() {
@@ -58,13 +63,15 @@ export default function Plant(props) {
                 'Authorization': `JWT ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({  "plant": id})
+            body: JSON.stringify({"plant": id})
         }).then(data => {
-            if (data.status === 401 || data.status === 403) {
+            if (data.status >= 400 && data.status < 500) {
                 console.log(`NOT logged in: ${data}`);
                 setPromptLogin(true);
             } else {
                 console.log(`logged in! ${data}`);
+                setRecentWater(true);
+                getPlantData();
             }
         });
     }
@@ -79,12 +86,15 @@ export default function Plant(props) {
                 <li><strong>Location: </strong><span>{data.spot}</span></li>
             </ul>
 
+            {recentWater && <h4 className="wateredToday">Success!</h4>}
+
             {wateredToday() ?
                 <h3 className="wateredToday">Watered Today</h3> :
 
                 promptLogin ?
-                    <LoginForm setPromptLogin={setPromptLogin} {...props}/> :
-                    <button onClick={() => {water()}}>Water</button>
+                    <LoginForm setPromptLogin={setPromptLogin} water={water} {...props}/> :
+
+                    data.watered && <button onClick={() => {water()}}>Water</button>
             }
 
             {data.watered &&

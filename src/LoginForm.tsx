@@ -23,6 +23,7 @@ export default function LoginForm (props) {
                 if (json.user.username) {
                     props.setUser(json.user.username);
                     props.setPromptLogin(false);
+                    props.water()
                 }
             });
     }
