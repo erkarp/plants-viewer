@@ -32,9 +32,23 @@ $darkGreen: #50981a;
 $lightGreen: #c1e8a3;
 
 :not(.DayPicker-Day--outside) {
+  &.DayPicker-Day--fertilize:after {
+    content: 'F';
+    position: absolute;
+    width: 14px;
+    font-size: 10px;
+    line-height: 15px;
+    border-radius: 50%;
+    transform: translate(-5px, -10px);
+  }
+
   &.DayPicker-Day--watered {
     color: $white;
     background-color: $darkGreen;
+
+    &.DayPicker-Day--fertilize:after {
+      background-color: scale-color($darkGreen, $saturation: -30%);
+    }
   }
 
   &.DayPicker-Day--nextWatering {

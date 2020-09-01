@@ -18,6 +18,7 @@ export default function Plant(props) {
 
     const modifiers = {
         watered: data.watered,
+        fertilize: data.fertilized,
         nextWatering: {
             from: getDate(data.next_watering_min),
             to: getDate(data.next_watering_max)
@@ -28,9 +29,17 @@ export default function Plant(props) {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                data.watered = data.watered.map(date => {
-                    return getDate(date)
+                data.fertilized = [];
+
+                data.watered = data.watered.map(obj => {
+                    const date = getDate(obj.date);
+
+                    if (obj.fertilized) {
+                        data.fertilized.push(date);
+                    }
+                    return date;
                 });
+
                 data = {...data, ...data.species};
                 setData(data);
             })
