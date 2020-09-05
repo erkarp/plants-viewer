@@ -69,16 +69,18 @@ export default function Plant(props) {
         fetch(`${process.env.__URL__}/plants/watering/`, {
             method: 'POST',
             headers: {
-                'Authorization': `JWT ${localStorage.getItem('token')}`,
+                'Authorization': `JWT ${localStorage.getItem('access')}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({"plant": id})
         }).then(data => {
+            const printableData = JSON.stringify(data);
+
             if (data.status >= 400 && data.status < 500) {
-                console.log(`NOT logged in: ${data}`);
+                console.log(`NOT logged in: ${printableData}`);
                 setPromptLogin(true);
             } else {
-                console.log(`logged in! ${data}`);
+                console.log(`logged in! ${printableData}`);
                 setRecentWater(true);
                 getPlantData();
             }

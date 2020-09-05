@@ -1,30 +1,43 @@
-import React, { useState, useEffect } from "react";
-import getCookie from './utils/getCookie'
+import React, { useState } from "react";
 
 export default function LoginForm (props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    function submit(e) {
-        e.preventDefault();
-
-        fetch(`${process.env.__URL__}/token-auth/`, {
+    function refreshToken() {
+        fetch(`${process.env.__URL__}/token/refresh/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username, password}),
-            credentials: 'include',
+            body: JSON.stringify({
+                'refresh': localStorage.getItem('refresh')
+            })
         })
             .then(res => res.json())
             .then(json => {
-                localStorage.setItem('token', json.token);
-                if (json.user.username) {
-                    props.setUser(json.user.username);
-                    props.setPromptLogin(false);
-                    props.water()
-                }
+                localStorage.setItem('access', json.access);
+                console.log('refreshed!', json);
+            });
+    }
+
+    function submit(e) {
+        e.preventDefault();
+
+        fetch(`${process.env.__URL__}/token/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username, password}),
+        })
+            .then(res => res.json())
+            .then(json => {
+                localStorage.setItem('access', json.access);
+                localStorage.setItem('refresh', json.refresh);
+                props.setPromptLogin(false);
+                props.water();
+                refreshToken();
             });
     }
 
