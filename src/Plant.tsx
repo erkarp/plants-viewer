@@ -66,21 +66,26 @@ export default function Plant(props) {
     }
 
     function water() {
+        const access_token = localStorage.getItem('access');
+        if (!access_token) {
+            setPromptLogin(true);
+            return;
+        }
+
         fetch(`${process.env.__URL__}/plants/watering/`, {
             method: 'POST',
             headers: {
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
+                'Authorization': `JWT ${access_token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({"plant": id})
         }).then(data => {
             const printableData = JSON.stringify(data);
 
-            if (data.status >= 400 && data.status < 500) {
-                console.log(`NOT logged in: ${printableData}`);
-                setPromptLogin(true);
+            if (data.status >= 400) {
+                console.log(`failure: ${printableData}`);
             } else {
-                console.log(`logged in! ${printableData}`);
+                console.log(`success: ${printableData}`);
                 setRecentWater(true);
                 getPlantData();
             }
