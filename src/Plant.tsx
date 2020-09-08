@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import DayPicker from "react-day-picker";
 import getDate from "./utils/getDate";
 import LoginForm from "./LoginForm";
+import PlantNotFound from "./PlantNotFound";
 
 
 export default function Plant(props) {
@@ -11,6 +12,7 @@ export default function Plant(props) {
     const [data, setData] = useState([]);
     const [promptLogin, setPromptLogin] = useState(false);
     const [recentWater, setRecentWater] = useState(false);
+    const [plantNotFound, setPlantNotFound] = useState(false);
 
     useEffect(() => {
         getPlantData()
@@ -29,8 +31,12 @@ export default function Plant(props) {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                data.fertilized = [];
+                if (!data.id) {
+                    setPlantNotFound(true);
+                    return;
+                }
 
+                data.fertilized = [];
                 data.watered = data.watered.map(obj => {
                     const date = getDate(obj.date);
 
@@ -96,34 +102,36 @@ export default function Plant(props) {
 
     return (
         <main>
-            <h1>{data.name}</h1>
+            {plantNotFound ? <PlantNotFound name={id}/> : <>
+                <h1>{data.name}</h1>
 
-            <ul>
-                <li><strong>Last Watered: </strong><span>{data.latest_watering_date}</span></li>
-                <li><strong>Light Needs: </strong><span>{data.lighting}</span></li>
-                <li><strong>Location: </strong><span>{data.spot}</span></li>
-            </ul>
+                <ul>
+                    <li><strong>Last Watered: </strong><span>{data.latest_watering_date}</span></li>
+                    <li><strong>Light Needs: </strong><span>{data.lighting}</span></li>
+                    <li><strong>Location: </strong><span>{data.spot}</span></li>
+                </ul>
 
-            {recentWater && <h4 className="wateredToday">Success!</h4>}
+                {recentWater && <h4 className="wateredToday">Success!</h4>}
 
-            {wateredToday() ?
-                <h3 className="wateredToday">Watered Today</h3> :
+                {wateredToday() ?
+                    <h3 className="wateredToday">Watered Today</h3> :
 
-                promptLogin ?
-                    <LoginForm setPromptLogin={setPromptLogin} water={water} {...props}/> :
+                    promptLogin ?
+                        <LoginForm setPromptLogin={setPromptLogin} water={water} {...props}/> :
 
-                    data.watered && <button onClick={() => {water()}}>Water</button>
-            }
+                        data.watered && <button onClick={() => {water()}}>Water</button>
+                }
 
-            {data.watered &&
-                <DayPicker
-                    modifiers={modifiers}
-                    numberOfMonths={numberOfMonths()}
-                    initialMonth={getFirstWater()}
-                    reverseMonths
-                    canChangeMonth={false}
-                />
-            }
+                {data.watered &&
+                    <DayPicker
+                        modifiers={modifiers}
+                        numberOfMonths={numberOfMonths()}
+                        initialMonth={getFirstWater()}
+                        reverseMonths
+                        canChangeMonth={false}
+                    />
+                }
+            </>}
         </main>
     )
 }
