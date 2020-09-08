@@ -32,14 +32,23 @@ $darkGreen: #50981a;
 $lightGreen: #c1e8a3;
 
 :not(.DayPicker-Day--outside) {
-  &.DayPicker-Day--fertilize:after {
-    content: 'F';
-    position: absolute;
-    width: 14px;
-    font-size: 10px;
-    line-height: 15px;
-    border-radius: 50%;
-    transform: translate(-5px, -10px);
+  &.DayPicker-Day--fertilize {
+    &::after {
+      content: 'F';
+      position: absolute;
+      width: 14px;
+      font-size: 10px;
+      line-height: 15px;
+      border-radius: 8px;
+      transform: translate(-5px, -10px);
+    }
+
+    &:hover::after {
+      content: 'Fertilized';
+      padding: 0 4px;
+      width: 40px;
+      transition: width ease-out .5s;
+    }
   }
 
   &.DayPicker-Day--watered {
