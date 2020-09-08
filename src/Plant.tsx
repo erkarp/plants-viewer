@@ -80,15 +80,17 @@ export default function Plant(props) {
             },
             body: JSON.stringify({"plant": id})
         }).then(data => {
-            const printableData = JSON.stringify(data);
-
             if (data.status >= 400) {
-                console.log(`failure: ${printableData}`);
+                console.log('failure');
+                setPromptLogin(true);
             } else {
-                console.log(`success: ${printableData}`);
+                console.log('success');
                 setRecentWater(true);
                 getPlantData();
             }
+        }).catch(error => {
+            console.log(`error: ${error}`);
+            setPromptLogin(true);
         });
     }
 
