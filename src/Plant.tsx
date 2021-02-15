@@ -91,6 +91,18 @@ export default function Plant(props) {
                         <li><strong>Last Watered: </strong><span>{data.latest_watering_date}</span></li>
                         <li><strong>Light Needs: </strong><span>{data.lighting}</span></li>
                         <li><strong>Location: </strong><span>{data.spot}</span></li>
+
+                        {data.species && data.species.fertilizer && data.species.fertilize_frequency &&
+                            <>
+                                <li>
+                                    <strong>Fertilizer: </strong>
+                                    <span>{data.species.fertilizer}</span>
+                                </li>
+                                <li>
+                                    <strong>Fertilize frequency: </strong>
+                                    <span>{data.species.fertilize_frequency}</span>
+                                </li>
+                            </>}
                     </ul>
 
                     {recentWater && <h4 className="wateredToday">Success!</h4>}
