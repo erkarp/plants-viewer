@@ -9,7 +9,7 @@ export default function WaterForm(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.handleWater();
+        props.handleWater(checked);
     };
 
     return (

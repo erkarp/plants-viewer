@@ -52,20 +52,23 @@ export default function Plant(props) {
             today.getDate() === water.getDate();
     }
 
-    function water() {
+    function water(andFertilize) {
         const access_token = localStorage.getItem('access');
         if (!access_token) {
             setPromptLogin(true);
             return;
         }
 
-        fetch(`${process.env.__URL__}/plants/watering/`, {
+        fetch(`${process.env.__URL__}/plants/water/`, {
             method: 'POST',
             headers: {
                 'Authorization': `JWT ${access_token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"plant": id})
+            body: JSON.stringify({
+                'plant': id,
+                'fertilize': andFertilize
+            })
         }).then(data => {
             if (data.status >= 400) {
                 console.log('failure');
