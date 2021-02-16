@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Switch from "react-switch";
 
 export default function WaterForm(props) {
@@ -7,8 +7,13 @@ export default function WaterForm(props) {
         setChecked(nextChecked);
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.handleWater();
+    };
+
     return (
-        <form className="waterForm" onSubmit={props.handleWater}>
+        <form className="waterForm" onSubmit={e => handleSubmit(e)}>
             <label style={{display: 'contents'}}>
                 <span className="fertilizeLabel">Fertilize</span>
                 <Switch
