@@ -108,7 +108,7 @@ $green: green;
 .waterForm {
   display: grid;
   grid-template-areas: "label switch" "button button";
-  grid-row-gap: 20px;
+  grid-row-gap: 30px;
   margin: 50px auto;
   width: 250px;
   max-width: 100%;
@@ -121,7 +121,7 @@ $green: green;
 .fertilizeLabel {
   grid-area: label;
   font-size: large;
-  align-self: center;
+  align-self: end;
 }
 
 .reactSwitch {
@@ -132,10 +132,12 @@ $green: green;
 button {
   display: block;
   grid-area: button;
+  justify-self: center;
   font-size: 26px;
   height: 50px;
-  border-radius: 4px;
+  width: 100px;
   border: none;
+  border-radius: 4px;
   background-color: #50981a;
   color: $white;
   cursor: pointer;
