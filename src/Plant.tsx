@@ -4,6 +4,7 @@ import getDate from "./utils/getDate";
 import LoginForm from "./LoginForm";
 import PlantCalendar from "./PlantCalendar";
 import PlantNotFound from "./PlantNotFound";
+import WaterForm from "./WaterForm";
 
 
 export default function Plant(props) {
@@ -113,8 +114,7 @@ export default function Plant(props) {
                         promptLogin ?
                             <LoginForm setPromptLogin={setPromptLogin} water={water} {...props}/> :
 
-                            data.watered && <button onClick={() => {water()}}>Water</button>
-                    }
+                            data.watered && <WaterForm handleWater={water}/>}
 
                     {data.watered && <PlantCalendar {...data}/>}
                 </>

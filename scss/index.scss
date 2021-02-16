@@ -105,18 +105,61 @@ $green: green;
   color: $lightGreen;
 }
 
+.waterForm {
+  display: grid;
+  grid-template-areas: "label switch" "button button";
+  grid-row-gap: 20px;
+  margin: 50px auto;
+  width: 250px;
+  max-width: 100%;
+  border: 2px solid #b4ad9d;
+  padding: 20px;
+  border-radius: 10px;
+  background: #eaeaea;
+}
+
+.fertilizeLabel {
+  grid-area: label;
+  font-size: large;
+  align-self: center;
+}
+
+.reactSwitch {
+  grid-area: switch;
+  justify-self: end;
+}
+
 button {
   display: block;
+  grid-area: button;
   font-size: 26px;
-  margin: 20px auto;
-  padding: 10px 15px;
+  height: 50px;
   border-radius: 4px;
   border: none;
   background-color: #50981a;
   color: $white;
   cursor: pointer;
+  transition: font-size .5s;
 
   &:focus {
     outline: #676767 auto 1px;
+  }
+
+  &.fertilize {
+    font-size: 22px;
+  }
+
+  ::after {
+    font-size: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.fertilize::after {
+    content: '& fertilize';
+    display: block;
+    font-size: 12px;
+    transition: font-size .5s;
   }
 }
