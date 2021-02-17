@@ -39,7 +39,8 @@ export default function LoginForm (props) {
                 localStorage.setItem('access', json.access);
                 localStorage.setItem('refresh', json.refresh);
                 props.setPromptLogin(false);
-                props.water();
+                // must pass fertilizer "checked" state
+                // props.water();
                 refreshToken();
             });
     }
