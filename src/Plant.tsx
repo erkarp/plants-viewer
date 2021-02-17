@@ -6,6 +6,9 @@ import PlantCalendar from "./PlantCalendar";
 import PlantNotFound from "./PlantNotFound";
 import WaterForm from "./WaterForm";
 
+// @ts-ignore
+import styles from "./plant.module";
+
 
 export default function Plant(props) {
     let { id } = useParams();
@@ -109,10 +112,10 @@ export default function Plant(props) {
                             </>}
                     </ul>
 
-                    {recentWater && <h4 className="wateredToday">Success!</h4>}
+                    {recentWater && <h4 className={styles.wateredToday}>Success!</h4>}
 
                     {wateredToday() ?
-                        <h3 className="wateredToday">Watered Today</h3> :
+                        <h3 className={styles.wateredToday}>Watered Today</h3> :
 
                         promptLogin ?
                             <LoginForm setPromptLogin={setPromptLogin} water={water} {...props}/> :

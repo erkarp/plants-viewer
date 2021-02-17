@@ -1,0 +1,16 @@
+.plants {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 14px;
+    border-radius: 25px;
+
+    &:not(:first-child) {
+      margin-bottom: 5px;
+    }
+  }
+}

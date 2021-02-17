@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Switch from "react-switch";
 
+// @ts-ignore
+import styles from "./waterform.module";
+
 export default function WaterForm(props) {
     const [checked, setChecked] = useState(false);
     const handleChange = nextChecked => {
@@ -13,13 +16,13 @@ export default function WaterForm(props) {
     };
 
     return (
-        <form className="waterForm" onSubmit={e => handleSubmit(e)}>
+        <form className={styles.waterForm} onSubmit={e => handleSubmit(e)}>
             <label style={{display: 'contents'}}>
-                <span className="fertilizeLabel">Fertilize</span>
+                <span className={styles.fertilizeLabel}>Fertilize</span>
                 <Switch
                     checked={checked}
                     onChange={handleChange}
-                    className="reactSwitch"
+                    className={styles.reactSwitch}
                 />
             </label>
             <button className={`${checked ? 'fertilize' : ''}`} type="submit">Water</button>

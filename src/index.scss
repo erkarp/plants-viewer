@@ -1,0 +1,119 @@
+#app {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+ul {
+  padding: 0;
+}
+
+$red: red;
+$yellow: #fbc20f;
+$green: green;
+
+$white: #fff;
+$darkGreen: #50981a;
+$lightGreen: #c1e8a3;
+
+@mixin bucketColors($index, $color) {
+  $textColor: scale-color($color, $lightness: -20%);
+
+  .feedRow-bucket--#{$index} {
+    background-color: scale-color($color, $lightness: 80%);
+    border: 1px solid $color;
+    color: $textColor;
+
+    a {
+      color: $textColor;
+    }
+  }
+}
+
+@for $i from 1 through 5 {
+  @include bucketColors($i, mix($yellow, $red, $weight: $i * 20%));
+}
+
+@for $i from 6 through 10 {
+  @include bucketColors($i, mix($green, $yellow, $weight: ($i - 5) * 20%));
+}
+
+button {
+  display: block;
+  grid-area: button;
+  justify-self: center;
+  font-size: 26px;
+  height: 50px;
+  width: 100px;
+  border: none;
+  border-radius: 4px;
+  background-color: #50981a;
+  color: $white;
+  cursor: pointer;
+  transition: font-size .5s;
+
+  &:focus {
+    outline: #676767 auto 1px;
+  }
+
+  &.fertilize {
+    font-size: 22px;
+  }
+
+  ::after {
+    font-size: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.fertilize::after {
+    content: '& fertilize';
+    display: block;
+    font-size: 12px;
+    transition: font-size .5s;
+  }
+}
+
+@import '../node_modules/react-day-picker/lib/style.css';
+
+
+:not(.DayPicker-Day--outside) {
+  &.DayPicker-Day--fertilize {
+    &::after {
+      content: 'F';
+      position: absolute;
+      width: 14px;
+      font-size: 10px;
+      line-height: 15px;
+      border-radius: 8px;
+      transform: translate(-5px, -10px);
+    }
+
+    &:hover::after {
+      content: 'Fertilized';
+      padding: 0 4px;
+      width: 40px;
+      transition: width ease-out .5s;
+    }
+  }
+
+  &.DayPicker-Day--watered {
+    color: $white;
+    background-color: $darkGreen;
+
+    &.DayPicker-Day--fertilize:after {
+      background-color: scale-color($darkGreen, $saturation: -30%);
+    }
+  }
+
+  &.DayPicker-Day--nextWatering {
+    color: $white;
+    background-color: $lightGreen;
+  }
+}
+
+.DayPicker-Day--today {
+  outline: 2px solid #51a0fa;
+  color: #51a0fa;
+}

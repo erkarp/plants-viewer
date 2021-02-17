@@ -1,16 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 const env = require('./local.env');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry:  [path.join(__dirname, 'src/index'), path.join(__dirname, 'scss/index.scss')],
+    entry: path.join(__dirname, 'src/index'),
     output: {
         path: path.join(__dirname, './build'),
         filename: 'index.js',
         crossOriginLoading: 'anonymous'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
     },
     mode: 'development',
     devtool: 'inline-source-map',
@@ -19,6 +20,7 @@ module.exports = {
             'Access-Control-Expose-Headers': 'Set-Cookie'
         },
         host: 'localhost',
+        port: 3000,
         historyApiFallback: true,
         noInfo: false,
         publicPath: '/build',
@@ -26,34 +28,57 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin(env),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        })
     ],
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
+                test: /\.j|tsx?$/,
+                loader: 'babel-loader',
                 exclude: /node_modules/
             },
             {
-                test: /\.jsx?$/,
-                use: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.scss$/,
-                use: [
+                test: /\.module\.s(a|c)ss$/,
+                loader: [
+                    'style-loader',
                     {
-                        loader: 'file-loader',
+                        loader: 'css-loader',
                         options: {
-                            name: './style.css'
+                            modules: true,
+                            sourceMap: true
                         }
                     },
-                    { loader: 'extract-loader' },
-                    { loader: 'css-loader?-url' },
-                    { loader: 'postcss-loader' },
-                    { loader: 'sass-loader' }
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
                 ]
-            }
+            },
+            {
+                test: /\.s(a|c)ss$/,
+                exclude: /\.module.(s(a|c)ss)$/,
+                loader: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader',
+                ],
+            },
         ]
     }
 };

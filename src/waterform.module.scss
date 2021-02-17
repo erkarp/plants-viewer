@@ -1,0 +1,23 @@
+.waterForm {
+  display: grid;
+  grid-template-areas: "label switch" "button button";
+  grid-row-gap: 30px;
+  margin: 50px auto;
+  width: 250px;
+  max-width: 100%;
+  border: 2px solid #b4ad9d;
+  padding: 20px;
+  border-radius: 10px;
+  background: #eaeaea;
+}
+
+.fertilizeLabel {
+  grid-area: label;
+  font-size: large;
+  align-self: end;
+}
+
+.reactSwitch {
+  grid-area: switch;
+  justify-self: end;
+}
