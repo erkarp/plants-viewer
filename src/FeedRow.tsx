@@ -2,6 +2,9 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import getDate from "./utils/getDate";
 
+// @ts-ignore
+import styles from "./feedrow.module";
+
 export default function FeedRow(props) {
     const { location } = useParams();
 
@@ -24,7 +27,7 @@ export default function FeedRow(props) {
     }();
 
     return (
-        <li className={`feedRow-bucket--${formatBucket}`}>
+        <li className={`${styles.row} feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
 
             {today__max === 0 ?

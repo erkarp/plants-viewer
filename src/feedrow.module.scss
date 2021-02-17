@@ -1,0 +1,8 @@
+.row {
+  margin: 5px;
+
+  @media (max-width: 450px) {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+}
