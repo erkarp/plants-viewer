@@ -1,3 +1,6 @@
+@import "scss/colors";
+@import "scss/forms";
+
 #app {
   font-family: sans-serif;
   display: flex;
@@ -7,14 +10,6 @@
 ul {
   padding: 0;
 }
-
-$red: red;
-$yellow: #fbc20f;
-$green: green;
-
-$white: #fff;
-$darkGreen: #50981a;
-$lightGreen: #c1e8a3;
 
 @mixin bucketColors($index, $color) {
   $textColor: scale-color($color, $lightness: -20%);
@@ -38,45 +33,7 @@ $lightGreen: #c1e8a3;
   @include bucketColors($i, mix($green, $yellow, $weight: ($i - 5) * 20%));
 }
 
-button {
-  display: block;
-  grid-area: button;
-  justify-self: center;
-  font-size: 26px;
-  height: 50px;
-  width: 100px;
-  border: none;
-  border-radius: 4px;
-  background-color: #50981a;
-  color: $white;
-  cursor: pointer;
-  transition: font-size .5s;
-
-  &:focus {
-    outline: #676767 auto 1px;
-  }
-
-  &.fertilize {
-    font-size: 22px;
-  }
-
-  ::after {
-    font-size: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  &.fertilize::after {
-    content: '& fertilize';
-    display: block;
-    font-size: 12px;
-    transition: font-size .5s;
-  }
-}
-
 @import '../node_modules/react-day-picker/lib/style.css';
-
 
 :not(.DayPicker-Day--outside) {
   &.DayPicker-Day--fertilize {

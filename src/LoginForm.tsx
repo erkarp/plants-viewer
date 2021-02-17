@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// @ts-ignore
+import styles from "./login.module";
+
 export default function LoginForm (props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -42,8 +45,7 @@ export default function LoginForm (props) {
     }
 
     return (
-        <form onSubmit={(e) => {submit(e)}}>
-            <h3>Please log in</h3>
+        <form className={styles.login} onSubmit={(e) => {submit(e)}}>
             <input
                 name="username"
                 value={username}

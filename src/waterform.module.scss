@@ -2,8 +2,6 @@
   display: grid;
   grid-template-areas: "label switch" "button button";
   grid-row-gap: 30px;
-  margin: 50px auto;
-  width: 250px;
   max-width: 100%;
   border: 2px solid #b4ad9d;
   padding: 20px;
@@ -20,4 +18,27 @@
 .reactSwitch {
   grid-area: switch;
   justify-self: end;
+}
+
+.submit {
+  width: 100px;
+  transition: font-size .5s;
+
+  &.fertilize {
+    font-size: 22px;
+  }
+
+  ::after {
+    font-size: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.fertilize::after {
+    content: '& fertilize';
+    display: block;
+    font-size: 12px;
+    transition: font-size .5s;
+  }
 }

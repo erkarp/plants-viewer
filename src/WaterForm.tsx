@@ -25,7 +25,12 @@ export default function WaterForm(props) {
                     className={styles.reactSwitch}
                 />
             </label>
-            <button className={`${checked ? 'fertilize' : ''}`} type="submit">Water</button>
+            <button
+                type="submit"
+                className={`${styles.submit} ${checked ? styles.fertilize : ''}`}
+            >
+                Water
+            </button>
         </form>
     )
 }
