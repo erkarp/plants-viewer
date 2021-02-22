@@ -3,3 +3,5 @@ build/*
 local.env.js
 node_modules/*
 webpack-stats.json
+
+./index.html
