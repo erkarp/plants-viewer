@@ -25,6 +25,8 @@ ul {
   }
 }
 
+@include bucketColors(0, lightgray);
+
 @for $i from 1 through 5 {
   @include bucketColors($i, mix($yellow, $red, $weight: $i * 20%));
 }

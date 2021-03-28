@@ -15,10 +15,11 @@ export default function FeedRow(props) {
         return Math.floor((t2-t1)/(24*3600*1000));
     }
 
-    const today__max = daysDiff(new Date(), getDate(props.next_watering_max));
-    const today__min = daysDiff(new Date(), getDate(props.next_watering_min));
+    const today__max = props.next_watering_max ? daysDiff(new Date(), getDate(props.next_watering_max)) : null;
+    const today__min = props.next_watering_min ? daysDiff(new Date(), getDate(props.next_watering_min)) : null;
 
     const formatBucket = function() {
+        if (!today__min || !today__max) return 0;
         if (today__max < 0) return 1;
         if (today__min > 0) return 10;
 
@@ -30,20 +31,22 @@ export default function FeedRow(props) {
         <li className={`${styles.row} feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
 
-            {today__max === 0 ?
-                <span><time dateTime={props.next_watering_max}>Today</time></span> :
+            {formatBucket === 0 ? <span>unwatered</span> :
 
-                today__max === 1 ?
-                    <span><time dateTime={props.next_watering_max}>By tomorrow</time></span> :
+                today__max === 0 ?
+                    <span><time dateTime={props.next_watering_max}>Today</time></span> :
 
-                    today__max < 0 ?
-                        <DaysLate max_date={props.next_watering_max} today__max={today__max}/> :
+                    today__max === 1 ?
+                        <span><time dateTime={props.next_watering_max}>By tomorrow</time></span> :
 
-                        today__min <= 0 ?
-                            <Within max_date={props.next_watering_max} today__max={today__max}/> :
+                        today__max < 0 ?
+                            <DaysLate max_date={props.next_watering_max} today__max={today__max}/> :
 
-                            <Between max_date={props.next_watering_max} today__max={today__max}
-                             min_date={props.next_watering_min} today__min={today__min}/>
+                            today__min <= 0 ?
+                                <Within max_date={props.next_watering_max} today__max={today__max}/> :
+
+                                <Between max_date={props.next_watering_max} today__max={today__max}
+                                         min_date={props.next_watering_min} today__min={today__min}/>
             }
         </li>
     )
@@ -51,10 +54,10 @@ export default function FeedRow(props) {
 
 function DaysLate(props) {
     return (
-    <span>
-        <time dateTime={props.max_date}>{Math.abs(props.today__max)}</time>
-        {' '}day{props.today__max < -1 ? 's' : ''} late
-    </span>
+        <span>
+            <time dateTime={props.max_date}>{Math.abs(props.today__max)}</time>
+            {' '}day{props.today__max < -1 ? 's' : ''} late
+        </span>
     )
 }
 
