@@ -47,6 +47,8 @@ export default function Plant(props) {
     }
 
     function wateredToday() {
+        if (!data.latest_watering_date) return;
+
         const today = new Date();
         const water = new Date(`${data.latest_watering_date}T00:00:00`);
 

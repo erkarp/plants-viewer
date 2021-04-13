@@ -31,7 +31,7 @@ export default function FeedRow(props) {
         <li className={`${styles.row} feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
 
-            {formatBucket === 0 ? <span>unwatered</span> :
+            {!today__max || !today__min ? <span>unwatered</span> :
 
                 today__max === 0 ?
                     <span><time dateTime={props.next_watering_max}>Today</time></span> :
