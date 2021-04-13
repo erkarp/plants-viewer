@@ -15,11 +15,11 @@ export default function FeedRow(props) {
         return Math.floor((t2-t1)/(24*3600*1000));
     }
 
-    const today__max = props.next_watering_max ? daysDiff(new Date(), getDate(props.next_watering_max)) : null;
-    const today__min = props.next_watering_min ? daysDiff(new Date(), getDate(props.next_watering_min)) : null;
+    const today__max = props.next_watering_max === null ? null : daysDiff(new Date(), getDate(props.next_watering_max));
+    const today__min = props.next_watering_min === null ? null : daysDiff(new Date(), getDate(props.next_watering_min));
 
     const formatBucket = function() {
-        if (!today__min || !today__max) return 0;
+        if (today__min === null || today__max === null) return 0;
         if (today__max < 0) return 1;
         if (today__min > 0) return 10;
 
@@ -31,7 +31,7 @@ export default function FeedRow(props) {
         <li className={`${styles.row} feedRow-bucket--${formatBucket}`}>
             <Link to={{ pathname: `/plant/${props.id}`, state: {background: location} }}>{props.name}</Link>
 
-            {!today__max || !today__min ? <span>unwatered</span> :
+            {formatBucket === 0 ? <span>unwatered</span> :
 
                 today__max === 0 ?
                     <span><time dateTime={props.next_watering_max}>Today</time></span> :
