@@ -24,14 +24,12 @@ module.exports = {
         port: 3000,
         historyApiFallback: true,
         noInfo: false,
-        publicPath: '/build',
         hot: true
     },
     plugins: [
         new webpack.DefinePlugin(env),
         new HtmlWebPackPlugin({
-            template: './src/index.html',
-            filename: '../index.html'
+            template: './src/index.html'
         })
     ],
     module: {
